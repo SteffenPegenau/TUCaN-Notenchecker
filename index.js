@@ -69,9 +69,10 @@ var sendMail = function (mailAddress, mailUser, mailPW, noten) {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                return console.log(error);
+                reject(error);
             }
             console.log('Message sent: ' + info.response);
+            resolve();
         });
     });
 };
@@ -97,19 +98,28 @@ getNoten(config.tuid, config.password).then(function (noten) {
         console.log(error);
     }
 
+    
+    
+    // Neue Noten speichern
+    jsonfile.writeFileSync(notenFile, noten, { spaces: 2 }); //
+    
     // Anzahl der Noten vergleichen
     if (alteNoten.length !== noten.length) {
         console.log("Vorher: " + alteNoten.length);
         console.log("Nachher: " + noten.length);
 
         console.log("Neue Noten!");
-        sendMail(config.gmailaddress, config.gmailuser, config.gmailpassword, noten);
+        sendMail(config.gmailaddress, config.gmailuser, config.gmailpassword, noten).then(
+            function() {
+                console.log("Ende");
+                process.exit();
+            }, function(error) {
+                console.log("Error!");
+                console.log(error);
+            });
     } else {
         console.log("Keine neuen Noten... :-(");
+        process.exit();
     }
-    
-    // Neue Noten speichern
-    jsonfile.writeFileSync(notenFile, noten, { spaces: 2 }); //
-    
-    process.exit();
+
 });
