@@ -1,0 +1,25 @@
+{
+  "name": "tucan-notenchecker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "startWithDebug": "DEBUG=nightmare* node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteffenPegenau/TUCaN-Notenchecker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SteffenPegenau/TUCaN-Notenchecker/issues"
+  },
+  "homepage": "https://github.com/SteffenPegenau/TUCaN-Notenchecker#readme",
+  "dependencies": {
+    "jsonfile": "^2.4.0",
+    "nightmare": "^2.7.0",
+    "nodemailer": "^2.6.0"
+  }
+}
