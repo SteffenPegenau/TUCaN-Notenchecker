@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "startWithDebug": "DEBUG=nightmare* node index.js"
+    "startWithDebug": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,6 @@
   "dependencies": {
     "jsonfile": "^2.4.0",
     "nightmare": "^2.7.0",
-    "nodemailer": "^2.6.0"
+    "nodemailer": "0.7.1"
   }
 }

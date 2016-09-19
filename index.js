@@ -50,7 +50,15 @@ var getNoten = function (user, pw) {
 var sendMail = function (mailAddress, mailUser, mailPW, noten) {
     return new Promise(function (resolve, reject) {
         // create reusable transporter object using the default SMTP transport
-        var transporter = nodemailer.createTransport('smtps://' + mailUser + '%40gmail.com:' + mailPW + '@smtp.gmail.com');
+        var transporter = nodemailer.createTransport("SMTP", {
+            host: "smtp.gmail.com", // hostname
+            secureConnection: true, // use SSL
+            port: 465, // port for secure SMTP
+            auth: {
+                user: mailAddress,
+                pass: mailPW
+            }
+        });
 
         var html = '<h1>Hier deine aktuellen Noten:</h1>';
         noten.forEach(function (element) {
@@ -71,7 +79,7 @@ var sendMail = function (mailAddress, mailUser, mailPW, noten) {
             if (error) {
                 reject(error);
             }
-            console.log('Message sent: ' + info.response);
+            //console.log('Message sent: ' + info.response);
             resolve();
         });
     });
@@ -110,10 +118,10 @@ getNoten(config.tuid, config.password).then(function (noten) {
 
         console.log("Neue Noten!");
         sendMail(config.gmailaddress, config.gmailuser, config.gmailpassword, noten).then(
-            function() {
+            function () {
                 console.log("Ende");
                 process.exit();
-            }, function(error) {
+            }, function (error) {
                 console.log("Error!");
                 console.log(error);
             });
